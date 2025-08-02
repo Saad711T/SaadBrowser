@@ -11,6 +11,14 @@ Simple and indie browser without tabs or any features !!!.
 - **Mobile** app in Android with `Kotlin`
 - **Desktop** app was built in Visual Studio and `C# - .NET` Techniques.
 
+#### Screenshots
+
+- Android :
+![android](readmeimgs/android.png)
+
+- Windows :
+![windows](readmeimgs/windows.png)
+
 
 ### Simple Feature XD
 ###### Performance :
