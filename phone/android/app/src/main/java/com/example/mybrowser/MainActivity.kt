@@ -20,7 +20,7 @@ import com.example.mybrowser.ui.theme.MyBrowserTheme
 class MainActivity : ComponentActivity() {
 
     private var webView: WebView? = null
-    private val homeUrl = "https://calm-daffodil-7a888b.netlify.app/" // ✏️ غيّرها لصفحتك الرئيسية
+    private val homeUrl = "https://calm-daffodil-7a888b.netlify.app/" //
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
