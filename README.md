@@ -14,15 +14,14 @@ Simple and indie browser without tabs or any features !!!.
 #### Screenshots
 
 - Android :
-![android](readmeimgs/android.png)
-
+<img src="readmeimgs/android.png" width="400px" alt=android />
 - Windows :
-![windows](readmeimgs/windows.png)
+<img src="readmeimgs/windows.png" width="400px" alt=windows />
 
 
 ### Simple Feature XD
 ###### Performance :
-![performance](readmeimgs/performance.png)
+<img src="readmeimgs/performance.png" width="200px" alt=performance>
 
 
 ### Credits
