@@ -21,7 +21,7 @@ Simple and indie browser without tabs or any features !!!.
 
 ### Simple Feature XD
 ###### Performance :
-<img src="readmeimgs/performance.png" width="200px" alt=performance>
+<img src="readmeimgs/performance.png" width="900px" alt=performance>
 
 
 ### Credits
