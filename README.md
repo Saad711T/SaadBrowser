@@ -1,5 +1,5 @@
 # SaadBrowser
-Indie browser working on PC &amp; Android , developed by : 0xSaad / Saad Almalki
+Indie browser working on PC & Android , developed by : 0xSaad / Saad Almalki
 ## Notice :
 Don't enter any dangerous or suspects websites because security is low in app.
 لاتدخل أي موقع غير موثوق أو مشتبه به في المتصفح لأنه متصفح ضعيف الحماية حتى تحديث لاحق.
