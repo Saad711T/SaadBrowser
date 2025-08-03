@@ -22,7 +22,9 @@ Simple and indie browser without tabs or any features !!!.
 
 - Android :
 <img src="readmeimgs/android.png" width="400px" alt=android />
+
 - Windows :
+
 <img src="readmeimgs/windows.png" width="700px" alt=windows />
 
 
