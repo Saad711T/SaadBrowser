@@ -208,3 +208,15 @@ body {
   }
 }
 
+#tabswindows {
+  text-align: center;
+  color: #06b6d4;
+  font-family: 'Solar6VF' , Dubai;
+  font-size: 30px;
+}
+
+#downloadbutton {
+  display: block;
+  margin: 1rem auto;
+  background-color: #89241d;
+}
