@@ -32,7 +32,7 @@
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
-            // webView21
+            // webView21 options
             // 
             webView21.AllowExternalDrop = true;
             webView21.CreationProperties = null;
@@ -59,6 +59,8 @@
 
         #endregion
 
+
+            
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
     }
 }
