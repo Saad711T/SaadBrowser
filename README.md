@@ -22,7 +22,8 @@ Don't enter any dangerous or suspects websites because security is low in app.
 ### Structure
 - **Web** Using `HTML` , `CSS` and `JavaScript`
 - **Mobile** app in Android with `Kotlin`
-- **Desktop** app was built in Visual Studio and `C# - .NET` Techniques.
+- **Windows** app was built in Visual Studio and `C# - .NET` Techniques.
+- **Linux** app based on web with `HTML` , `CSS` , `JavaScript` languages and converted to *.deb* with `C Language`.
 
 #### Screenshots
 
