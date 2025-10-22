@@ -23,12 +23,14 @@ Simple and indie browser any features XD !!!.
 
 #### Screenshots
 
+- Windows :
+<img src="readmeimgs/windows.png" width="700px" alt=windows />
+
+- Linux :
+<img src="readmeimgs/linux.png" width="700px" alt=windows />
+
 - Android :
 <img src="readmeimgs/android.png" width="400px" alt=android />
-
-- Windows :
-
-<img src="readmeimgs/windows.png" width="700px" alt=windows />
 
 
 ### Simple Feature XD
