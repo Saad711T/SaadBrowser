@@ -35,20 +35,18 @@ namespace SaadBrowser
                 btnNewTab, btnCloseTab, new ToolStripSeparator(), addressBar
             });
 
-            
-            
+
+
             Controls.Remove(webView21);
 
 
             Controls.Add(tabControl);
             Controls.Add(toolStrip);
 
-
-
             btnBack.Click += (s, e) => { var wv = CurrentWebView(); if (wv != null && wv.CanGoBack) wv.GoBack(); };
             btnForward.Click += (s, e) => { var wv = CurrentWebView(); if (wv != null && wv.CanGoForward) wv.GoForward(); };
             btnHome.Click += (s, e) => Navigate(homeUrl);
-            btnNewTab.Click += (s, e) => CreateTab("https://calm-daffodil-7a888b.netlify.app");
+            btnNewTab.Click += (s, e) => CreateTab(homeUrl);
             btnCloseTab.Click += (s, e) => CloseCurrentTab();
 
             addressBar.KeyDown += (s, e) =>
@@ -59,9 +57,14 @@ namespace SaadBrowser
                     var text = addressBar.Text.Trim();
                     if (string.IsNullOrEmpty(text)) return;
 
-                    string url = text;
-                    if (!text.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
-                        !text.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+
+
+                    string url = text.ToLower() == "home" ? homeUrl : text;
+
+                    if (!text.StartsWith("http://" , StringComparison.OrdinalIgnoreCase) &&
+                        
+                        !text.StartsWith("https://", StringComparison.OrdinalIgnoreCase) &&
+                        text.ToLower() != "home")
                     {
                         url = "https://" + text;
                     }
@@ -70,10 +73,7 @@ namespace SaadBrowser
                 }
             };
 
-
             tabControl.SelectedIndexChanged += (s, e) => SyncUIWithCurrentTab();
-
-
 
             var firstTab = new TabPage("Tab 1");
             tabControl.TabPages.Add(firstTab);
@@ -84,7 +84,7 @@ namespace SaadBrowser
             WireWebViewEvents(webView21);
 
             webView21.Source = new Uri(homeUrl);
-            addressBar.Text = homeUrl;
+            addressBar.Text = "home";
         }
 
         private void CreateTab(string url)
@@ -103,12 +103,12 @@ namespace SaadBrowser
 
             wv.CoreWebView2InitializationCompleted += (_, __) => wv.CoreWebView2.Navigate(url);
             _ = wv.EnsureCoreWebView2Async();
-            addressBar.Text = url;
+            addressBar.Text = url == homeUrl ? "home" : url;
         }
 
         private void CloseCurrentTab()
         {
-            if (tabControl.TabPages.Count <= 1) return; // خلي تبويب واحد على الأقل
+            if (tabControl.TabPages.Count <= 1) return;
             var current = tabControl.SelectedTab;
             var wv = CurrentWebView();
             wv?.Dispose();
@@ -126,15 +126,16 @@ namespace SaadBrowser
             var wv = CurrentWebView();
             if (wv == null) return;
 
-
-
-
             if (wv.CoreWebView2 != null)
                 wv.CoreWebView2.Navigate(url);
             else
                 wv.Source = new Uri(url);
 
-            addressBar.Text = url;
+
+
+                            //addressBar.Text = wv.Source?.AbsoluteUri ?? homeUrl;
+
+            addressBar.Text = url == homeUrl ? "home" : url;
         }
 
         private void WireWebViewEvents(WebView2 wv)
@@ -149,7 +150,7 @@ namespace SaadBrowser
                     wv.CoreWebView2.NavigationStarting += (_, args) =>
                     {
                         if (tabControl.SelectedTab?.Controls.Contains(wv) == true)
-                            addressBar.Text = args.Uri;
+                            addressBar.Text = args.Uri == homeUrl ? "home" : args.Uri;
                     };
                 }
             };
@@ -168,17 +169,25 @@ namespace SaadBrowser
                 {
                     btnBack.Enabled = wv.CanGoBack;
                     btnForward.Enabled = wv.CanGoForward;
-                    addressBar.Text = wv.Source?.AbsoluteUri ?? wv.CoreWebView2.Source;
+                    var currentUrl = wv.Source?.AbsoluteUri ?? wv.CoreWebView2.Source;
+                    addressBar.Text = currentUrl == homeUrl ? "home" : currentUrl;
                 }
                 else
                 {
                     btnBack.Enabled = btnForward.Enabled = false;
-                    addressBar.Text = wv.Source?.AbsoluteUri ?? homeUrl;
+                    addressBar.Text = "home";
                 }
             }
             catch
             {
             }
         }
+
+
+
     }
+
+
+
+
 }
