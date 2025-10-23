@@ -13,11 +13,11 @@ namespace SaadBrowser
         private TabControl tabControl = new TabControl { Dock = DockStyle.Fill };
         private ToolStrip toolStrip = new ToolStrip { GripStyle = ToolStripGripStyle.Hidden, Dock = DockStyle.Top };
 
-        private ToolStripButton btnBack = new ToolStripButton("⟵") { ToolTipText = "رجوع" };
-        private ToolStripButton btnForward = new ToolStripButton("⟶") { ToolTipText = "تقدم" };
-        private ToolStripButton btnHome = new ToolStripButton("⌂") { ToolTipText = "الصفحة الرئيسية" };
-        private ToolStripButton btnNewTab = new ToolStripButton("+") { ToolTipText = "تبويب جديد" };
-        private ToolStripButton btnCloseTab = new ToolStripButton("×") { ToolTipText = "إغلاق التبويب" };
+        private ToolStripButton btnBack = new ToolStripButton("⟵") { ToolTipText = "رجوع / Back" };
+        private ToolStripButton btnForward = new ToolStripButton("⟶") { ToolTipText = "تقدم / Next" };
+        private ToolStripButton btnHome = new ToolStripButton("⌂") { ToolTipText = "الصفحة الرئيسية / Main menu" };
+        private ToolStripButton btnNewTab = new ToolStripButton("+") { ToolTipText = "تبويب جديد / New Tab" };
+        private ToolStripButton btnCloseTab = new ToolStripButton("×") { ToolTipText = "إغلاق التبويب / Exit Tab" };
         private ToolStripTextBox addressBar = new ToolStripTextBox { AutoSize = false, Width = 600 };
 
 
