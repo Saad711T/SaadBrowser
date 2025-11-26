@@ -26,6 +26,7 @@ Indie browser working on PC & Android , developed by : 0xSaad / Saad Almalki
 | Arch Linux     |  Not Supported    |
 | Android     |  Supported    |
 | Android TV    |  (Maybe)    |
+| Chrome OS    |  (Maybe)    |
 | Elementary OS     |  Supported    |
 | Harmony OS (Huawei)     |  Not Supported    |
 | iOS     |  Not Supported    |
