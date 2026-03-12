@@ -1,0 +1,3 @@
+[submodule "tree/main/web/frontend"]
+	path = tree/main/web/frontend
+	url = https://github.com/Saad711T/Volx-Browser
