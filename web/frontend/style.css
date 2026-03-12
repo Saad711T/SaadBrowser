@@ -220,3 +220,11 @@ body {
   margin: 1rem auto;
   background-color: #89241d;
 }
+
+.try {
+  text-align: right;
+  font-family: 'Solar6VF' , Dubai;
+  color: white;
+  font-size: 1.25rem;
+  margin-top: -4%;
+}
