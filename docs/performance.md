@@ -1,3 +1,6 @@
-Performance in Windows :
+##### Performance in Windows :
+![windows](../images/performance-windows.png)
 
-Performance in Linux :
+
+##### Performance in Linux :
+![windows](../images/performance-linux.png)
