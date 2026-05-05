@@ -153,7 +153,9 @@ namespace SaadBrowser
         {
             foreach (TabPage page in tabControl.TabPages)
             {
+                
                 if (page.Controls.Contains(wv)) return page;
+
             }
             return null;
         }
@@ -237,6 +239,8 @@ namespace SaadBrowser
             catch
             {
             }
+
+
         }
 
 
