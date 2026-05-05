@@ -8,18 +8,26 @@
 </head>
 <body>
 
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+
   <div>
     <h1 class="logo">Saad Browser</h1>
   </div>
 
   <h2 class="try">
-    <a href="volxbrowser/index.html">
-    Try Volx Browser (Legacy Edition)</h2>
-</a>
-  <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search...">
-    <button id="search-button">Search</button>
-  </div>
+    <a href="volxbrowser/index.html">Try Volx Browser (Legacy Edition)</a>
+  </h2>
+
+  <form class="search-container" id="search-form" autocomplete="off">
+    <select id="search-engine" aria-label="Search engine">
+      <option value="google">Google</option>
+      <option value="duckduckgo">DuckDuckGo</option>
+      <option value="bing">Bing</option>
+      <option value="brave">Brave</option>
+    </select>
+    <input type="text" id="search-input" placeholder="Search the web or enter a URL...">
+    <button id="search-button" type="submit">Search</button>
+  </form>
 
 <div class="tabs">
   <button class="tab-button" data-url="https://www.google.com">
@@ -34,22 +42,21 @@
   <button class="tab-button" data-url="https://www.wikipedia.org">
     <img src="https://www.wikipedia.org/static/favicon/wikipedia.ico" width="32px" alt="Wikipedia"> Wikipedia
   </button>
-    <button class="tab-button" data-url="https://www.w3schools.com/">
+  <button class="tab-button" data-url="https://www.w3schools.com/">
     <img src="img/W3Schools.webp" width="32px" alt="W3Schools"> W3Schools
   </button>
-      <button class="tab-button" data-url="https://www.programiz.com/">
+  <button class="tab-button" data-url="https://www.programiz.com/">
     <img src="img/Programiz.webp" width="32px" alt="Programiz"> Programiz
   </button>
   <button class="tab-button" data-url="https://translate.google.com/">
-    <img src="img/translate.webp" width="32px" alt="Wikipedia"> Google Translate
+    <img src="img/translate.webp" width="32px" alt="Google Translate"> Google Translate
   </button>
-
 </div>
 
 <div>
-  <h3  id="tabswindows">تم إضافة التبويبات في تحديث سطح المكتب الجديد !!!</h3>
+  <h3 id="tabswindows">تم إضافة التبويبات في تحديث سطح المكتب الجديد !!!</h3>
 </div>
-    <button class="tab-button" id="downloadbutton" data-url="https://saadthelegend1.itch.io/saad-browser">
+  <button class="tab-button" id="downloadbutton" data-url="https://saadthelegend1.itch.io/saad-browser">
     <img src="img/itch.webp" width="32px" alt="itch"> Itch io
   </button>
 
