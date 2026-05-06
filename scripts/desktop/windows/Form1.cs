@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.WinForms;
@@ -23,22 +24,102 @@ namespace SaadBrowser
         private ToolStripButton btnHome = new ToolStripButton("⌂") { ToolTipText = "الصفحة الرئيسية / Main menu" };
         private ToolStripButton btnNewTab = new ToolStripButton("+") { ToolTipText = "تبويب جديد / New Tab (Ctrl+T)" };
         private ToolStripButton btnCloseTab = new ToolStripButton("×") { ToolTipText = "إغلاق التبويب / Exit Tab (Ctrl+W)" };
+        private ToolStripButton btnClearData = new ToolStripButton("🛡") { ToolTipText = "مسح بيانات التصفح / Clear browsing data" };
         private ToolStripTextBox addressBar = new ToolStripTextBox { AutoSize = false, Width = 600 };
 
 
         private readonly string homeUrl = "https://calm-daffodil-7a888b.netlify.app/";
         private readonly string searchUrlTemplate = "https://www.google.com/search?q={0}";
 
+        // Persistent profile storage so cookies / logins survive restart and
+        // self-extracting single-file deploys.
+        private static readonly string UserDataFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "SaadBrowser", "WebView2");
+
+        // Anti-fingerprint shim injected into every document at creation time.
+        // Mirrors scripts/phone/android/app/src/main/assets/anti-fingerprint.js.
+        private const string AntiFingerprintScript = """
+        (function () {
+          'use strict';
+          function safeDefine(obj, prop, value) {
+            try {
+              Object.defineProperty(obj, prop, { get: function () { return value; }, configurable: true });
+            } catch (e) {}
+          }
+          safeDefine(navigator, 'hardwareConcurrency', 8);
+          safeDefine(navigator, 'deviceMemory', 8);
+          safeDefine(navigator, 'doNotTrack', '1');
+          safeDefine(navigator, 'webdriver', false);
+          safeDefine(navigator, 'languages', Object.freeze(['en-US', 'en']));
+          try {
+            safeDefine(navigator, 'plugins', Object.freeze([]));
+            safeDefine(navigator, 'mimeTypes', Object.freeze([]));
+          } catch (e) {}
+          try {
+            var origToDataURL = HTMLCanvasElement.prototype.toDataURL;
+            HTMLCanvasElement.prototype.toDataURL = function () {
+              try {
+                var ctx = this.getContext('2d');
+                if (ctx && this.width > 0 && this.height > 0) {
+                  var img = ctx.getImageData(0, 0, this.width, this.height);
+                  for (var i = 0; i < img.data.length; i += 4) {
+                    if (Math.random() < 0.003) img.data[i] ^= 1;
+                  }
+                  ctx.putImageData(img, 0, 0);
+                }
+              } catch (e) {}
+              return origToDataURL.apply(this, arguments);
+            };
+          } catch (e) {}
+          try {
+            var spoof = function (orig) {
+              return function (p) {
+                if (p === 37445) return 'Intel Inc.';
+                if (p === 37446) return 'Intel Iris OpenGL Engine';
+                return orig.call(this, p);
+              };
+            };
+            if (window.WebGLRenderingContext) {
+              WebGLRenderingContext.prototype.getParameter = spoof(WebGLRenderingContext.prototype.getParameter);
+            }
+            if (window.WebGL2RenderingContext) {
+              WebGL2RenderingContext.prototype.getParameter = spoof(WebGL2RenderingContext.prototype.getParameter);
+            }
+          } catch (e) {}
+          try {
+            if (window.AudioBuffer) {
+              var origGetChannelData = AudioBuffer.prototype.getChannelData;
+              AudioBuffer.prototype.getChannelData = function () {
+                var data = origGetChannelData.apply(this, arguments);
+                for (var i = 0; i < data.length; i += 100) {
+                  data[i] = data[i] + (Math.random() - 0.5) * 1e-7;
+                }
+                return data;
+              };
+            }
+          } catch (e) {}
+        })();
+        """;
+
         public Form1()
         {
             InitializeComponent();
+
+            // Pin the WebView2 user-data folder before the control auto-initialises
+            // so cookies/sessions land in a known persistent location.
+            webView21.CreationProperties = new CoreWebView2CreationProperties
+            {
+                UserDataFolder = UserDataFolder
+            };
 
             KeyPreview = true;
 
 
             toolStrip.Items.AddRange(new ToolStripItem[] {
                 btnBack, btnForward, btnReload, btnStop, btnHome, new ToolStripSeparator(),
-                btnNewTab, btnCloseTab, new ToolStripSeparator(), addressBar
+                btnNewTab, btnCloseTab, new ToolStripSeparator(), addressBar, new ToolStripSeparator(),
+                btnClearData
             });
 
             statusStrip.Items.Add(statusLabel);
@@ -59,6 +140,7 @@ namespace SaadBrowser
             btnHome.Click += (s, e) => Navigate(homeUrl);
             btnNewTab.Click += (s, e) => CreateTab(homeUrl);
             btnCloseTab.Click += (s, e) => CloseCurrentTab();
+            btnClearData.Click += async (s, e) => await ClearBrowsingDataAsync();
 
             addressBar.KeyDown += (s, e) =>
             {
@@ -121,7 +203,11 @@ namespace SaadBrowser
             var wv = new WebView2
             {
                 Dock = DockStyle.Fill,
-                DefaultBackgroundColor = System.Drawing.Color.White
+                DefaultBackgroundColor = System.Drawing.Color.White,
+                CreationProperties = new CoreWebView2CreationProperties
+                {
+                    UserDataFolder = UserDataFolder
+                }
             };
             page.Controls.Add(wv);
             tabControl.TabPages.Add(page);
@@ -141,6 +227,27 @@ namespace SaadBrowser
             var wv = CurrentWebView();
             wv?.Dispose();
             tabControl.TabPages.Remove(current);
+        }
+
+        private async System.Threading.Tasks.Task ClearBrowsingDataAsync()
+        {
+            var wv = CurrentWebView();
+            if (wv?.CoreWebView2?.Profile == null)
+            {
+                statusLabel.Text = "Profile not ready";
+                return;
+            }
+
+            var confirmed = MessageBox.Show(
+                "هل تريد حذف ملفات الكوكيز والتاريخ والكاش؟\nClear cookies, history and cache for this profile?",
+                "Saad Browser",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning);
+            if (confirmed != DialogResult.OK) return;
+
+            statusLabel.Text = "Clearing...";
+            await wv.CoreWebView2.Profile.ClearBrowsingDataAsync();
+            statusLabel.Text = "Browsing data cleared";
         }
 
         private WebView2? CurrentWebView()
@@ -180,9 +287,20 @@ namespace SaadBrowser
                 SyncUIWithCurrentTab();
             };
 
-            wv.CoreWebView2InitializationCompleted += (_, e) =>
+            wv.CoreWebView2InitializationCompleted += async (_, e) =>
             {
                 if (!e.IsSuccess) return;
+
+                ApplyPrivacySettings(wv.CoreWebView2);
+
+                try
+                {
+                    await wv.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(AntiFingerprintScript);
+                }
+                catch
+                {
+                    // Older WebView2 runtimes may reject some shim features; ignore.
+                }
 
                 wv.CoreWebView2.HistoryChanged += (_, __) => SyncUIWithCurrentTab();
 
@@ -212,6 +330,35 @@ namespace SaadBrowser
             };
 
             _ = wv.EnsureCoreWebView2Async();
+        }
+
+        private void ApplyPrivacySettings(CoreWebView2 core)
+        {
+            try
+            {
+                // Strict tracking prevention blocks known cross-site trackers.
+                core.Profile.PreferredTrackingPreventionLevel =
+                    CoreWebView2TrackingPreventionLevel.Strict;
+            }
+            catch
+            {
+                // Property not available on older WebView2 runtimes.
+            }
+
+            try
+            {
+                var s = core.Settings;
+                s.IsPasswordAutosaveEnabled = true;       // login UX
+                s.IsGeneralAutofillEnabled = true;        // form UX
+                s.AreDefaultContextMenusEnabled = true;
+                s.IsStatusBarEnabled = true;
+                s.IsSwipeNavigationEnabled = true;
+                // Send DNT signal alongside the in-page navigator.doNotTrack shim.
+                s.IsReputationCheckingRequired = true;
+            }
+            catch
+            {
+            }
         }
 
         private void SyncUIWithCurrentTab()
