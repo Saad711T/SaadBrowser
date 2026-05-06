@@ -1,0 +1,26 @@
+
+![image](../images/SB-Updates.jpg)
+
+- 0.0.1 : Initial Version (3 Aug 2025)
+- 0.0.2 : Fix Bugs (3 Aug 2025)
+- 0.1.0 : Android and Windows Version (3 Aug 2025) 
+- 0.1.1 : Homepage Updates (8 Aug 2025)
+- 0.1.5 : Tabs Feature in Windows app (11 Aug 2025)
+- 0.1.6 : Enhancing UX and Web Homepage (12 Aug 2025)
+- 0.1.8 : Fix Bugs (20 Aug 2025)
+- 0.2.2 : Linux `.deb` Version (15 Sep 2025)
+- 0.2.4 : Editing Homepage title from **MyBrowser** to **SaadBrowser** (14 Oct 2025)
+- 0.2.5 : Enhancing Readability (17 Oct 2025)
+- 0.2.8 : Editing pictures (22 Oct 2025)
+- 0.3.0 : Added home url instead of real url of home page (23 Oct 2025)
+- 0.3.1 : Added List of supported versions (26 Nov 2025)
+- 0.3.2 : ChromeOS unofficial version (26 Nov 2025)
+- 0.3.3 : Creates StacksDeep an uncomplete standalone search engine for SaadBrowser (1 Feb 2026)
+- 0.3.4 : Fix Bugs (4 Feb 2026)
+- 0.3.5 : Supporting Volx Browser `Legacy Edition` of SaadBrowser (12 Mar 2026)
+- 0.3.6 : Edited files structures and add docs (20 Apr 2026)
+- 0.3.7 : Updated highlight tweet in Homepage (21 Apr 2026)
+- 0.3.8 : Improve cross-platform features (Windows, Android, Web) (6 May 2026)
+- 0.3.9 : Add privacy hardening, anti-fingerprint shim, and login persistence
+- 0.4.0 : Beta Version (6 May 2026)
+
