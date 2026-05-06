@@ -1,9 +1,8 @@
-
 ![image](../images/SB-Updates.jpg)
 
 - 0.0.1 : Initial Version (3 Aug 2025)
 - 0.0.2 : Fix Bugs (3 Aug 2025)
-- 0.1.0 : Android and Windows Version (3 Aug 2025) 
+- 0.1.0 : Android and Windows Version (3 Aug 2025)
 - 0.1.1 : Homepage Updates (8 Aug 2025)
 - 0.1.5 : Tabs Feature in Windows app (11 Aug 2025)
 - 0.1.6 : Enhancing UX and Web Homepage (12 Aug 2025)
@@ -21,6 +20,5 @@
 - 0.3.6 : Edited files structures and add docs (20 Apr 2026)
 - 0.3.7 : Updated highlight tweet in Homepage (21 Apr 2026)
 - 0.3.8 : Improve cross-platform features (Windows, Android, Web) (6 May 2026)
-- 0.3.9 : Add privacy hardening, anti-fingerprint shim, and login persistence
+- 0.3.9 : Add privacy hardening, anti-fingerprint shim, and login persistence (6 May 2026)
 - 0.4.0 : Beta Version (6 May 2026)
-
