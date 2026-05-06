@@ -49,6 +49,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    // androidx.webkit gives us addDocumentStartJavaScript, used to inject the
+    // anti-fingerprint shim before any page script runs.
+    implementation("androidx.webkit:webkit:1.12.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

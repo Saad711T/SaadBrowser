@@ -7,7 +7,8 @@ const SEARCH_ENGINES = {
 
 const STORAGE_KEYS = {
   engine: "saadbrowser:engine",
-  theme: "saadbrowser:theme"
+  theme: "saadbrowser:theme",
+  social: "saadbrowser:social-embeds"
 };
 
 function looksLikeUrl(text) {
@@ -49,6 +50,7 @@ searchForm.addEventListener("submit", (event) => {
 });
 
 document.querySelectorAll(".tab-button").forEach((button) => {
+  if (button.id === "load-tweet") return;
   button.addEventListener("click", () => {
     const url = button.getAttribute("data-url");
     if (url) window.location.href = url;
@@ -71,3 +73,34 @@ themeToggle.addEventListener("click", () => {
   applyTheme(next);
   localStorage.setItem(STORAGE_KEYS.theme, next);
 });
+
+// Click-to-load social embed: don't reach out to platform.twitter.com (and the
+// tracking pixels it pulls in) until the user explicitly asks.
+const loadTweetBtn = document.getElementById("load-tweet");
+const tweetContainer = document.getElementById("tweet-container");
+
+const TWEET_HTML = '<blockquote class="twitter-tweet"><p lang="ar" dir="rtl">سلام عليكم ورحمة الله وبركاته<br><br>احصائية بسيطة عن أنشط حسابات قيتهب في السعودية لكل مدينة<br><br>حسبت : الريبوز والمشاركات العامة وأستثنيت الخاصة وعمليات الأتمتة<br><br>للمعلومية قد تكون صحيحة أو خاطئة ولكنها مبدئية جداً<br>وفيه مدن تحتاج لتدقيق مثل : جازان-نجران-الطائف-تبوك<br>بل وحائل تحتاج لبحث . <a href="https://t.co/Ry30D4zHBC">pic.twitter.com/Ry30D4zHBC</a></p>&mdash; 0xSaad 🇸🇦 (@0xdonzDev) <a href="https://twitter.com/0xdonzDev/status/2044347146929881160?ref_src=twsrc%5Etfw">April 15, 2026</a></blockquote>';
+
+function loadTweetEmbed() {
+  if (!loadTweetBtn || !tweetContainer) return;
+  tweetContainer.innerHTML = TWEET_HTML;
+  tweetContainer.hidden = false;
+  const widgets = document.createElement("script");
+  widgets.async = true;
+  widgets.src = "https://platform.twitter.com/widgets.js";
+  widgets.charset = "utf-8";
+  document.body.appendChild(widgets);
+  loadTweetBtn.remove();
+}
+
+if (loadTweetBtn) {
+  loadTweetBtn.addEventListener("click", () => {
+    localStorage.setItem(STORAGE_KEYS.social, "1");
+    loadTweetEmbed();
+  });
+
+  // Auto-load only if the user opted in previously.
+  if (localStorage.getItem(STORAGE_KEYS.social) === "1") {
+    loadTweetEmbed();
+  }
+}
