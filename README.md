@@ -16,7 +16,7 @@ Don't enter any dangerous or suspects websites because security is low in app.
 
 دخول المواقع الخبيثة بالمتصفح هو مسؤوليتك الشخصية , فأساس الحماية لم يُطور بعد بما في ذلك القائمة السوداء للمواقع المشبوهة
 
-تحميل المتصفح كاملاً على مسؤوليتك
+**تحميل المتصفح كاملاً على مسؤوليتك**
 
 <br>
 
@@ -24,7 +24,7 @@ Disclaimer: To avoid future liability
 
 Accessing malicious websites through your browser is your sole responsibility, as the browser's security framework, including a blacklist of suspicious sites, is still under development.
 
-Downloading the browser is entirely at your own risk.
+**Downloading the browser is entirely at your own risk.**
 
 <hr>
 
