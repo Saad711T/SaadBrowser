@@ -22,3 +22,4 @@
 - 0.3.8 : Improve cross-platform features (Windows, Android, Web) (6 May 2026)
 - 0.3.9 : Add privacy hardening, anti-fingerprint shim, and login persistence (6 May 2026)
 - 0.4.0 : Beta Version (6 May 2026)
+- 0.4.1 : Fix Bugs (7 May 2026)
