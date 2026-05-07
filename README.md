@@ -1,7 +1,4 @@
 # SaadBrowser
---
-
-## Project Description
 Indie browser working on PC & Android , developed by : 0xSaad / Saad Almalki
 
 <img src="images/logo.png" alt="logo" width="280px" />
