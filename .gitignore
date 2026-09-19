@@ -9,3 +9,4 @@ obj/
 PublishProfiles/
 *.cache
 *.nuget.*
+*.lock
